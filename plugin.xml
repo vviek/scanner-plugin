@@ -18,14 +18,18 @@
     </js-module>
 
     <platform name="android">
+
+
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="CsZBar">
                 <param name="android-package" value="org.cloudsky.cordovaPlugins.ZBar"/>
             </feature>
         </config-file>
+
         <config-file target="AndroidManifest.xml" parent="application">
         <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-                android:name="org.cloudsky.cordovaPlugins.ZBarScannerActivity"
+                android:name="org.cloudsky.cordovaPlugins.ScannerActivity"
                 android:screenOrientation="fullUser"
                 android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
         </config-file>
@@ -36,33 +40,75 @@
             <uses-feature android:name="android.hardware.camera.front" android:required="false" />
             <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
+<config-file target="res/values/colors.xml" parent="/*">
+ 
+</config-file>
+
         <config-file target="res/values/strings.xml" parent="/*">
-            <string name="csZbarScannerTitle">Scan QR Code</string>
-            <string name="csZbarScannerInstructions">Please point your camera at the QR code.</string>
-            <color name="csZbarScannerTextColor">#ffffff</color>
-            <color name="csZbarScannerTextBackground">#88000000</color>
-            <color name="csZbarScannerBackground">#000000</color>
+        <color name="scanner_line">#00ceff</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <string name="ok">OK</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="permission_camera">This app needs camera permission to scan barcode</string>
+    <string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">Barcode Reader Sample</string>
+    <string name="barcode_header">Click &quot;Read Barcode&quot; to read a barcode</string>
+    <string name="read_barcode">Read Barcode</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Use Flash</string>
+    <string name="barcode_success">Barcode read successfully</string>
+    <string name="barcode_failure">No barcode captured</string>
+    <string name="barcode_error">"Error reading barcode: %1$s"</string>
+    <string name="grant">GRANT</string>
+    <string name="cancel">CANCEL</string>
+
+
+<declare-styleable name="ScannerOverlay">
+        <attr name="square_width" format="integer" />
+        <attr name="square_height" format="integer" />
+        <attr name="line_color" format="color" />
+        <attr name="line_width" format="integer" />
+        <attr name="line_speed" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="BarcodeReaderFragment">
+        <attr name="auto_focus" format="boolean" />
+        <attr name="use_flash" format="boolean" />
+    </declare-styleable>
+
+
+ <integer name="scanner_rect_width">230</integer>
+    <integer name="scanner_rect_height">230</integer>
+    <integer name="line_width">4</integer>
+    <integer name="line_speed">5</integer>
+
+    
         </config-file>
-        <framework src="com.android.support:support-v4:23.1.0" />
-        <resource-file src="android/res/layout/cszbarscanner.xml" target="res/layout/cszbarscanner.xml" />
-        <source-file src="android/ZBarcodeFormat.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+
+        
+        <framework src="com.android.support:appcompat-v7:23.1.0" />
+        <framework src="com.google.android.gms:play-services-vision:15.0.2" />
+
+        <resource-file src="android/res/layout/activity_barcode_reader.xml" target="res/layout/activity_barcode_reader.xml" />
+        <resource-file src="android/res/layout/fragment_barcode.xml" target="res/layout/fragment_barcode.xml" />
+        <resource-file src="android/res/layout/fragment_barcode_reader.xml" target="res/layout/fragment_barcode_reader.xml" />
+        <resource-file src="android/res/layout/scanner_view.xml" target="res/layout/scanner_view.xml" />
+
+        <source-file src="android/BarcodeGraphic.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/BarcodeGraphicTracker.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/BarcodeReaderFragment.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/BarcodeTrackerFactory.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/CameraSource.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/CameraSourcePreview.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/GraphicOverlay.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/ScannerActivity.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        <source-file src="android/ScannerOverlay.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         <source-file src="android/ZBar.java" target-dir="src/org/cloudsky/cordovaPlugins" />
-        <source-file src="android/ZBarScannerActivity.java" target-dir="src/org/cloudsky/cordovaPlugins" />
-        <source-file src="android/libs/zbar.jar" target-dir="libs" />
-        <source-file src="android/libs/armeabi/libiconv.so" target-dir="libs/armeabi" />
-        <source-file src="android/libs/armeabi/libzbarjni.so" target-dir="libs/armeabi" />
-        <source-file src="android/libs/armeabi-v7a/libiconv.so" target-dir="libs/armeabi-v7a" />
-        <source-file src="android/libs/armeabi-v7a/libzbarjni.so" target-dir="libs/armeabi-v7a" />
-        <source-file src="android/libs/arm64-v8a/libiconv.so" target-dir="libs/arm64-v8a" />
-        <source-file src="android/libs/arm64-v8a/libzbarjni.so" target-dir="libs/arm64-v8a" />s
-        <source-file src="android/libs/x86/libiconv.so" target-dir="libs/x86" />
-        <source-file src="android/libs/x86/libzbarjni.so" target-dir="libs/x86" />
-        <source-file src="android/res/drawable/camera_flash.png" target-dir="res/drawable"/>
-        <source-file src="android/res/drawable/camera_flash.png" target-dir="res/drawable-hdpi"/>
-        <source-file src="android/res/drawable/camera_flash.png" target-dir="res/drawable-ldpi"/>
-        <source-file src="android/res/drawable/camera_flash.png" target-dir="res/drawable-mdpi"/>
-        <source-file src="android/res/drawable/camera_flash.png" target-dir="res/drawable-xhdpi"/>
-        <source-file src="android/res/drawable/camera_flash.png" target-dir="res/drawable-xxhdpi"/>
+
+        
     </platform>
 
     <platform name="ios">
