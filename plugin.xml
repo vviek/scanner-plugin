@@ -22,6 +22,7 @@
 
 
         <config-file target="res/xml/config.xml" parent="/*">
+        <preference name="android-minSdkVersion" value="19" />
             <feature name="CsZBar">
                 <param name="android-package" value="org.cloudsky.cordovaPlugins.ZBar"/>
             </feature>
@@ -85,7 +86,7 @@
     <integer name="line_width">4</integer>
     <integer name="line_speed">5</integer>
 
-    
+
         </config-file>
 
         
