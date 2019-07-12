@@ -22,7 +22,6 @@
 
 
         <config-file target="res/xml/config.xml" parent="/*">
-        <preference name="android-minSdkVersion" value="19" />
             <feature name="CsZBar">
                 <param name="android-package" value="org.cloudsky.cordovaPlugins.ZBar"/>
             </feature>
@@ -90,7 +89,7 @@
         </config-file>
 
         
-        <framework src="com.android.support:appcompat-v7:23.1.0" />
+        <framework src="com.android.support:appcompat-v7:26.1.0" />
         <framework src="com.google.android.gms:play-services-vision:15.0.2" />
 
         <resource-file src="android/res/layout/activity_barcode_reader.xml" target="res/layout/activity_barcode_reader.xml" />
