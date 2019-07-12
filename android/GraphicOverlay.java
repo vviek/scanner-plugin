@@ -142,11 +142,11 @@ public class GraphicOverlay<T extends GraphicOverlay.Graphic> extends View {
      *
      * @return list of all active graphics.
      */
-    public List<T> getGraphics() {
+    /*public List<T> getGraphics() {
         synchronized (mLock) {
             return new Vector(mGraphics);
         }
-    }
+    }*/
 
     /**
      * Returns the horizontal scale factor.

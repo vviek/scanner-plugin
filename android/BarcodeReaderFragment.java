@@ -458,7 +458,7 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
         // Find the barcode whose center is closest to the tapped point.
         Barcode best = null;
         float bestDistance = Float.MAX_VALUE;
-        for (BarcodeGraphic graphic : mGraphicOverlay.getGraphics()) {
+    /*    for (BarcodeGraphic graphic : mGraphicOverlay.getGraphics()) {
             Barcode barcode = graphic.getBarcode();
             if (barcode.getBoundingBox().contains((int) x, (int) y)) {
                 // Exact hit, no need to keep looking.
@@ -473,7 +473,7 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                 bestDistance = distance;
             }
         }
-
+*/
         if (best != null) {
             Intent data = new Intent();
             data.putExtra(BarcodeObject, best);
