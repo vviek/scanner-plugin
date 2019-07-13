@@ -92,11 +92,12 @@
         <framework src="com.android.support:appcompat-v7:26.1.0" />
         <framework src="com.google.android.gms:play-services-vision:15.0.2" />
 
-        <resource-file src="android/res/layout/activity_barcode_reader.xml" target="res/layout/activity_barcode_reader.xml" />
+<!--        <resource-file src="android/res/layout/activity_barcode_reader.xml" target="res/layout/activity_barcode_reader.xml" />
         <resource-file src="android/res/layout/fragment_barcode.xml" target="res/layout/fragment_barcode.xml" />
         <resource-file src="android/res/layout/fragment_barcode_reader.xml" target="res/layout/fragment_barcode_reader.xml" />
+        -->
         <resource-file src="android/res/layout/scanner_view.xml" target="res/layout/scanner_view.xml" />
-
+<!--
         <source-file src="android/BarcodeGraphic.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         <source-file src="android/BarcodeGraphicTracker.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         <source-file src="android/BarcodeReaderFragment.java" target-dir="src/org/cloudsky/cordovaPlugins" />
@@ -104,9 +105,12 @@
         <source-file src="android/CameraSource.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         <source-file src="android/CameraSourcePreview.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         <source-file src="android/GraphicOverlay.java" target-dir="src/org/cloudsky/cordovaPlugins" />
-        <source-file src="android/ScannerActivity.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         <source-file src="android/ScannerOverlay.java" target-dir="src/org/cloudsky/cordovaPlugins" />
        
+        -->
+
+        <source-file src="android/ScannerActivity.java" target-dir="src/org/cloudsky/cordovaPlugins" />
+        
         <source-file src="android/ZBar.java" target-dir="src/org/cloudsky/cordovaPlugins" />
 
         
