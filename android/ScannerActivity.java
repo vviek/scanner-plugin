@@ -15,7 +15,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
-import com.netlink.bhopal.R;
+
 
 import java.util.List;
 

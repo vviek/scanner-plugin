@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 
-import com.netlink.bhopal.R;
 
 public class ScannerOverlay extends ViewGroup {
     private float left, top, endY;
