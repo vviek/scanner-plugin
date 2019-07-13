@@ -39,9 +39,9 @@ public class ZBar extends CordovaPlugin {
                 JSONObject params = args.optJSONObject(0);
 
                 Context appCtx = cordova.getActivity().getApplicationContext();
-               // Intent scanIntent = new Intent(appCtx, ScannerActivity.class);
-              //  scanIntent.putExtra(ScannerActivity.EXTRA_PARAMS, params.toString());
-               // cordova.startActivityForResult(this, scanIntent, SCAN_CODE);
+                Intent scanIntent = new Intent(appCtx, ScannerActivity.class);
+                scanIntent.putExtra(ScannerActivity.EXTRA_PARAMS, params.toString());
+                cordova.startActivityForResult(this, scanIntent, SCAN_CODE);
             }
             return true;
         } else {
@@ -59,18 +59,18 @@ public class ZBar extends CordovaPlugin {
             switch(resultCode) {
                 case Activity.RESULT_OK:
 
-                    //String barcodeValue = result.getStringExtra(ScannerActivity.EXTRA_QRVALUE);
-                    //Log.e("onActivityResult",  barcodeValue);
-                    //scanCallbackContext.success(barcodeValue);
+                    String barcodeValue = result.getStringExtra(ScannerActivity.EXTRA_QRVALUE);
+                    Log.e("onActivityResult",  barcodeValue);
+                    scanCallbackContext.success(barcodeValue);
                     break;
                 case Activity.RESULT_CANCELED:
                     Log.e("onActivityResult",  "cancelled");
                     scanCallbackContext.error("cancelled");
                     break;
-            //    case ScannerActivity.RESULT_ERROR:
-              //      Log.e("onActivityResult",  "Error");
-                //    scanCallbackContext.error("Scan failed due to an error");
-                  //  break;
+                case ScannerActivity.RESULT_ERROR:
+                    Log.e("onActivityResult",  "Error");
+                    scanCallbackContext.error("Scan failed due to an error");
+                    break;
                 default:
                     scanCallbackContext.error("Unknown error");
             }
