@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
@@ -53,6 +54,8 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
     private static final String KEY_SCAN_OVERLAY_VISIBILITY = "key_scan_overlay_visibility";
     // intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
+    private String package_name;
+    private Resources resources;
 
     // constants used to pass extra data in the intent
     protected boolean autoFocus = false;
@@ -138,11 +141,11 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_barcode_reader, container, false);
+        View view = inflater.inflate(getResourceId("layout/fragment_barcode_reader"), container, false);
         permissionStatus = getActivity().getSharedPreferences("permissionStatus", getActivity().MODE_PRIVATE);
-        mPreview = view.findViewById(R.id.preview);
-        mGraphicOverlay = view.findViewById(R.id.graphicOverlay);
-        mScanOverlay = view.findViewById(R.id.scan_overlay);
+        mPreview = view.findViewById(getResourceId("id/preview"));
+        mGraphicOverlay = view.findViewById(getResourceId("id/graphicOverlay"));
+        mScanOverlay = view.findViewById(getResourceId("id/scan_overlay"));
         mScanOverlay.setVisibility(scanOverlayVisibility);
         gestureDetector = new GestureDetector(getActivity(), new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(getActivity(), new ScaleListener());
@@ -154,10 +157,10 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(context, attrs, savedInstanceState);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BarcodeReaderFragment);
-        autoFocus = a.getBoolean(R.styleable.BarcodeReaderFragment_auto_focus, true);
-        useFlash = a.getBoolean(R.styleable.BarcodeReaderFragment_use_flash, false);
-        a.recycle();
+ //       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BarcodeReaderFragment);
+      //  autoFocus = a.getBoolean(getResourceId("styleable/BarcodeReaderFragment_auto_focus"), true);
+  //      useFlash = a.getBoolean(getResourceId("styleable/BarcodeReaderFragment_use_flash"), false);
+       // a.recycle();
     }
 
     @Override
@@ -176,9 +179,9 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
                 //Show Information about why you need the permission
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.grant_permission));
-                builder.setMessage(getString(R.string.permission_camera));
-                builder.setPositiveButton(R.string.grant, new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(getResourceId("string/grant_permission")));
+                builder.setMessage(getString(getResourceId("string/permission_camera")));
+                builder.setPositiveButton(getResourceId("string/grant"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -195,9 +198,9 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                 builder.show();
             } else if (permissionStatus.getBoolean(Manifest.permission.CAMERA, false)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.grant_permission));
-                builder.setMessage(getString(R.string.permission_camera));
-                builder.setPositiveButton(R.string.grant, new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(getResourceId("string/grant_permission")));
+                builder.setMessage(getResourceId("string/permission_camera"));
+                builder.setPositiveButton(getResourceId("string/grant"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -208,7 +211,7 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                         startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
                     }
                 });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResourceId("string/cancel"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -276,8 +279,7 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
             boolean hasLowStorage = getActivity().registerReceiver(null, lowstorageFilter) != null;
 
             if (hasLowStorage) {
-                Toast.makeText(getActivity(), R.string.low_storage_error, Toast.LENGTH_LONG).show();
-                Log.w(TAG, getString(R.string.low_storage_error));
+                Log.w(TAG, getString(getResourceId("string/low_storage_error")));
             }
         }
 
@@ -381,16 +383,16 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                 proceedAfterPermission();
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.CAMERA)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.grant_permission));
-                builder.setMessage(getString(R.string.permission_camera));
-                builder.setPositiveButton(R.string.grant, new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(getResourceId("string/grant_permission")));
+                builder.setMessage(getString(getResourceId("string/permission_camera")));
+                builder.setPositiveButton(getResourceId("string/grant"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                         requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
                     }
                 });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getResourceId("string/cancel"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -651,5 +653,10 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
 
         void onCameraPermissionDenied();
     }
-
+    private int getResourceId (String typeAndName)
+    {
+        if(package_name == null) package_name = getActivity().getApplication().getPackageName();
+        if(resources == null) resources = getActivity().getApplication().getResources();
+        return resources.getIdentifier(typeAndName, null, package_name);
+    }
 }

@@ -30,7 +30,7 @@ public class ScannerOverlay extends ViewGroup {
 
     public ScannerOverlay(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = context.getTheme().obtainStyledAttributes(
+     /*   TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.ScannerOverlay,
                 0, 0);
@@ -39,6 +39,7 @@ public class ScannerOverlay extends ViewGroup {
         lineColor = a.getColor(R.styleable.ScannerOverlay_line_color, ContextCompat.getColor(context, R.color.scanner_line));
         lineWidth = a.getInteger(R.styleable.ScannerOverlay_line_width, getResources().getInteger(R.integer.line_width));
         frames = a.getInteger(R.styleable.ScannerOverlay_line_speed, getResources().getInteger(R.integer.line_width));
+    */
     }
 
     @Override
