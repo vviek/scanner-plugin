@@ -101,7 +101,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(getResourceId("id/fm_container"), readerFragment);
         fragmentTransaction.commitAllowingStateLoss();
-        readerFragment.setUseFlash(false);
+    
     }
 
 
