@@ -10,7 +10,7 @@
         android:background="#000000" />
 
     <LinearLayout
-        android:visibility="gone"
+
         android:id="@+id/textLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,6 +20,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,6 +38,7 @@
             android:textSize="16dp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +59,8 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/tag"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tag"
@@ -63,6 +68,8 @@
             android:textAllCaps="false" />
 
         <Button
+            android:id="@+id/untag"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Untag"

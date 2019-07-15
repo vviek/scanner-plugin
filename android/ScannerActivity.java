@@ -2,6 +2,7 @@ package org.cloudsky.cordovaPlugins;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.FragmentManager;
@@ -10,10 +11,15 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -31,6 +37,60 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         super.onCreate(savedInstanceState);
 
         setContentView(getResourceId("layout/scanner_view"));
+        Intent startIntent = getIntent();
+        String paramStr = startIntent.getStringExtra(EXTRA_PARAMS);
+        JSONObject params;
+        try { params = new JSONObject(paramStr); }
+        catch (JSONException e) { params = new JSONObject(); }
+        String textTitle = params.optString("text_title");
+        String textInstructions = params.optString("text_instructions");
+        Boolean drawSight = params.optBoolean("drawSight", true);
+        String  text_one= params.optString("text_one");
+        String text_two = params.optString("text_two");
+        String text_three= params.optString("text_three");
+        Boolean text_one_visibility = params.optBoolean("text_one_visibility", false);
+        Boolean text_two_visibility = params.optBoolean("text_two_visibility", false);
+        Boolean text_three_visibility = params.optBoolean("text_three_visibility", false);
+        Boolean button_one_visibility = params.optBoolean("button_one_visibility", false);
+        Boolean button_two_visibility = params.optBoolean("button_two_visibility", false);
+        TextView text1= findViewById(getResourceId("id/text1"));
+        text1.setText(text_one);
+        if(text_one_visibility)
+        {
+            text1.setVisibility(View.VISIBLE);
+        }
+
+        TextView text2= findViewById(getResourceId("id/text2"));
+        text2.setText(text_two);
+        if(text_two_visibility)
+        {
+            text2.setVisibility(View.VISIBLE);
+        }
+
+        TextView text3= findViewById(getResourceId("id/text3"));
+        text3.setText(text_three);
+        if(text_three_visibility)
+        {
+            text3.setVisibility(View.VISIBLE);
+        }
+
+        Button btnTag= findViewById(getResourceId("id/tag"));
+
+        if(button_one_visibility)
+        {
+            btnTag.setVisibility(View.VISIBLE);
+        }
+
+        Button btnUnTag= findViewById(getResourceId("id/untag"));
+
+        if(button_two_visibility)
+        {
+            btnUnTag.setVisibility(View.VISIBLE);
+        }
+
+
+        //whichCamera = params.optString("camera");
+        //flashMode = params.optString("flash");
         addBarcodeReaderFragment();
     }
     
@@ -41,6 +101,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(getResourceId("id/fm_container"), readerFragment);
         fragmentTransaction.commitAllowingStateLoss();
+        readerFragment.setUseFlash(false);
     }
 
 
