@@ -19,8 +19,6 @@
 
     <platform name="android">
 
-
-
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="CsZBar">
                 <param name="android-package" value="org.cloudsky.cordovaPlugins.ZBar"/>
@@ -40,14 +38,8 @@
             <uses-feature android:name="android.hardware.camera.front" android:required="false" />
             <uses-permission android:name="android.permission.CAMERA" />
         </config-file>
-<config-file target="res/values/colors.xml" parent="/*">
- 
-</config-file>
 
         <config-file target="res/values/strings.xml" parent="/*">
-        <color name="scanner_line">#00ceff</color>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
     <string name="ok">OK</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="permission_camera">This app needs camera permission to scan barcode</string>
@@ -112,7 +104,6 @@
         <source-file src="android/ScannerActivity.java" target-dir="src/org/cloudsky/cordovaPlugins" />
         
         <source-file src="android/ZBar.java" target-dir="src/org/cloudsky/cordovaPlugins" />
-
         
     </platform>
 

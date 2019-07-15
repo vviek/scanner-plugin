@@ -1,24 +1,21 @@
 package org.cloudsky.cordovaPlugins;
 
 import android.content.Context;
-import android.content.res.TypedArray;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.ViewGroup;
-
-
 public class ScannerOverlay extends ViewGroup {
     private float left, top, endY;
     private int rectWidth, rectHeight;
     private int frames;
     private boolean revAnimation;
-    private int lineColor, lineWidth;
+    private int lineWidth;
 
     public ScannerOverlay(Context context) {
         super(context);
@@ -30,16 +27,14 @@ public class ScannerOverlay extends ViewGroup {
 
     public ScannerOverlay(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-     /*   TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.ScannerOverlay,
-                0, 0);
-        rectWidth = a.getInteger(R.styleable.ScannerOverlay_square_width, getResources().getInteger(R.integer.scanner_rect_width));
-        rectHeight = a.getInteger(R.styleable.ScannerOverlay_square_height, getResources().getInteger(R.integer.scanner_rect_height));
-        lineColor = a.getColor(R.styleable.ScannerOverlay_line_color, ContextCompat.getColor(context, R.color.scanner_line));
-        lineWidth = a.getInteger(R.styleable.ScannerOverlay_line_width, getResources().getInteger(R.integer.line_width));
-        frames = a.getInteger(R.styleable.ScannerOverlay_line_speed, getResources().getInteger(R.integer.line_width));
-    */
+
+        String package_name = context.getPackageName();
+        Resources resources = context.getResources();
+        resources.getIdentifier("string/ScannerOverlay", null, package_name);
+        rectWidth=250;
+        rectHeight=250;
+        lineWidth=5;
+        frames=6;
     }
 
     @Override
@@ -89,7 +84,7 @@ public class ScannerOverlay extends ViewGroup {
 
         // draw horizontal line
         Paint line = new Paint();
-        line.setColor(lineColor);
+        line.setColor(getResources().getColor(android.R.color.holo_orange_dark));
         line.setStrokeWidth(Float.valueOf(lineWidth));
 
         // draw the line to product animation

@@ -42,6 +42,7 @@ public class ZBar extends CordovaPlugin {
                 Intent scanIntent = new Intent(appCtx, ScannerActivity.class);
                 scanIntent.putExtra(ScannerActivity.EXTRA_PARAMS, params.toString());
                 cordova.startActivityForResult(this, scanIntent, SCAN_CODE);
+
             }
             return true;
         } else {

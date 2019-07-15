@@ -2,17 +2,14 @@ package org.cloudsky.cordovaPlugins;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.barcode.Barcode;
@@ -20,7 +17,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 
 import java.util.List;
 
-public class ScannerActivity extends AppCompatActivity implements BarcodeReaderFragment.BarcodeReaderListener {
+public class ScannerActivity extends Activity implements BarcodeReaderFragment.BarcodeReaderListener {
 
     private BarcodeReaderFragment readerFragment;
     private boolean showAlertCheck = true;
@@ -33,9 +30,6 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReaderF
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
         setContentView(getResourceId("layout/scanner_view"));
         addBarcodeReaderFragment();
     }
@@ -43,7 +37,7 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReaderF
     private void addBarcodeReaderFragment() {
         readerFragment = BarcodeReaderFragment.newInstance(true, false, View.VISIBLE);
         readerFragment.setListener(this);
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentManager supportFragmentManager =getFragmentManager();
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(getResourceId("id/fm_container"), readerFragment);
         fragmentTransaction.commitAllowingStateLoss();
@@ -107,4 +101,6 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeReaderF
         if(resources == null) resources = getApplication().getResources();
         return resources.getIdentifier(typeAndName, null, package_name);
     }
+
+
 }

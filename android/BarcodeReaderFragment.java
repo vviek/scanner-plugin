@@ -12,16 +12,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
@@ -31,11 +31,6 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import org.cloudsky.cordovaPlugins.CameraSource;
-import org.cloudsky.cordovaPlugins.CameraSourcePreview;
-import org.cloudsky.cordovaPlugins.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -83,14 +78,6 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
         // Required empty public constructor
     }
 
-    public static BarcodeReaderFragment newInstance(boolean autoFocus, boolean useFlash) {
-        Bundle args = new Bundle();
-        args.putBoolean(KEY_AUTO_FOCUS, autoFocus);
-        args.putBoolean(KEY_USE_FLASH, useFlash);
-        BarcodeReaderFragment fragment = new BarcodeReaderFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
 
     public static BarcodeReaderFragment newInstance(boolean autoFocus, boolean useFlash, int scanOverlayVisibleStatus) {
@@ -185,7 +172,9 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
+                        }
                     }
                 });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -221,7 +210,9 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                 builder.show();
             } else {
                 //just request the permission
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
+                }
             }
 
 
@@ -389,7 +380,9 @@ public class BarcodeReaderFragment extends Fragment implements View.OnTouchListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_CALLBACK_CONSTANT);
+                        }
                     }
                 });
                 builder.setNegativeButton(getResourceId("string/cancel"), new DialogInterface.OnClickListener() {

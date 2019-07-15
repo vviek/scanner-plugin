@@ -7,7 +7,7 @@
         android:id="@+id/fm_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black" />
+        android:background="#000000" />
 
     <LinearLayout
         android:visibility="gone"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1) Its a dummy data for testing"
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2) Its a dummy data "
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3) Its a dummy "
-            android:textColor="@color/white"
+            android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
     </LinearLayout>
