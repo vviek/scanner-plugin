@@ -106,11 +106,14 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
 
 
 
-
     @Override
     public void onScanned(Barcode barcode) {
-        Toast.makeText(this, barcode.rawValue, Toast.LENGTH_SHORT).show();
         Log.e("onScanned : ", ": " + barcode.rawValue);
+        Intent result = new Intent ();
+        result.putExtra(EXTRA_QRVALUE, barcode.rawValue);
+        setResult(Activity.RESULT_OK, result);
+        finish();
+
     }
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
@@ -162,6 +165,10 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         if(resources == null) resources = getApplication().getResources();
         return resources.getIdentifier(typeAndName, null, package_name);
     }
-
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        super.onBackPressed();
+    }
 
 }
