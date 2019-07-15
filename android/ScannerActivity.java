@@ -115,13 +115,13 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         finish();
 
     }
-    @Override
+     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
         Log.e("barcodes ", ": " + barcodes.size());
         if (barcodes.size() > 1) {
-            readerFragment.pauseScanning();
+            //readerFragment.pauseScanning();
             if (showAlertCheck) {
-                showAlertDialog();
+//                showAlertDialog();
             }
         }
     }
