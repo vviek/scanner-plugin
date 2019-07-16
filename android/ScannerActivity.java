@@ -139,6 +139,8 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
             result.putExtra(EXTRA_QRVALUE, barcode.rawValue);
             setResult(Activity.RESULT_OK, result);
             finish();
+        }else{
+            Toast.makeText(this, "Scanning finished, please select TAG or UNTAG ?", Toast.LENGTH_SHORT).show();
         }
     }
     @Override
