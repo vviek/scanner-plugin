@@ -95,7 +95,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
             public void onClick(View v) {
                 Intent result = new Intent ();
                 result.putExtra(EXTRA_QRVALUE, barCodeResult);
-                result.putExtra(EXTRA_ISTAG, true);
+                  result.putExtra(EXTRA_ISTAG, ":true");
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
@@ -106,7 +106,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
             public void onClick(View v) {
                 Intent result = new Intent ();
                 result.putExtra(EXTRA_QRVALUE, barCodeResult);
-                result.putExtra(EXTRA_ISTAG, false);
+                result.putExtra(EXTRA_ISTAG, ":false");
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
