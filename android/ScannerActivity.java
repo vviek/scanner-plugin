@@ -28,10 +28,13 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
     private BarcodeReaderFragment readerFragment;
     private boolean showAlertCheck = true;
     public static final String EXTRA_QRVALUE = "qrValue";
+    public static final String EXTRA_ISTAG= "is_tag";
     public static final String EXTRA_PARAMS = "params";
     public static final int RESULT_ERROR =5;
     private String package_name;
     private Resources resources;
+    private Boolean button_one_visibility;
+    private String barCodeResult;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +43,13 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         Intent startIntent = getIntent();
         String paramStr = startIntent.getStringExtra(EXTRA_PARAMS);
         JSONObject params;
-        try { params = new JSONObject(paramStr); }
-        catch (JSONException e) { params = new JSONObject(); }
+        try {
+            params = new JSONObject(paramStr);
+
+        }
+        catch (JSONException e) {
+            params = new JSONObject();
+        }
         String textTitle = params.optString("text_title");
         String textInstructions = params.optString("text_instructions");
         Boolean drawSight = params.optBoolean("drawSight", true);
@@ -51,7 +59,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         Boolean text_one_visibility = params.optBoolean("text_one_visibility", false);
         Boolean text_two_visibility = params.optBoolean("text_two_visibility", false);
         Boolean text_three_visibility = params.optBoolean("text_three_visibility", false);
-        Boolean button_one_visibility = params.optBoolean("button_one_visibility", false);
+        button_one_visibility = params.optBoolean("button_one_visibility", false);
         Boolean button_two_visibility = params.optBoolean("button_two_visibility", false);
         TextView text1= findViewById(getResourceId("id/text1"));
         text1.setText(text_one);
@@ -59,36 +67,50 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         {
             text1.setVisibility(View.VISIBLE);
         }
-
         TextView text2= findViewById(getResourceId("id/text2"));
         text2.setText(text_two);
         if(text_two_visibility)
         {
             text2.setVisibility(View.VISIBLE);
         }
-
         TextView text3= findViewById(getResourceId("id/text3"));
         text3.setText(text_three);
         if(text_three_visibility)
         {
             text3.setVisibility(View.VISIBLE);
         }
-
         Button btnTag= findViewById(getResourceId("id/tag"));
-
         if(button_one_visibility)
         {
             btnTag.setVisibility(View.VISIBLE);
         }
-
         Button btnUnTag= findViewById(getResourceId("id/untag"));
-
         if(button_two_visibility)
         {
             btnUnTag.setVisibility(View.VISIBLE);
         }
 
+        btnTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent ();
+                result.putExtra(EXTRA_QRVALUE, barCodeResult);
+                result.putExtra(EXTRA_ISTAG, true);
+                setResult(Activity.RESULT_OK, result);
+                finish();
+            }
+        });
 
+        btnUnTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent result = new Intent ();
+                result.putExtra(EXTRA_QRVALUE, barCodeResult);
+                result.putExtra(EXTRA_ISTAG, false);
+                setResult(Activity.RESULT_OK, result);
+                finish();
+            }
+        });
         //whichCamera = params.optString("camera");
         //flashMode = params.optString("flash");
         addBarcodeReaderFragment();
@@ -101,21 +123,25 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(getResourceId("id/fm_container"), readerFragment);
         fragmentTransaction.commitAllowingStateLoss();
-    
+
     }
+
 
 
 
     @Override
     public void onScanned(Barcode barcode) {
         Log.e("onScanned : ", ": " + barcode.rawValue);
-        Intent result = new Intent ();
-        result.putExtra(EXTRA_QRVALUE, barcode.rawValue);
-        setResult(Activity.RESULT_OK, result);
-        finish();
-
+        barCodeResult=barcode.rawValue;
+        if(!button_one_visibility)
+        {
+            Intent result = new Intent ();
+            result.putExtra(EXTRA_QRVALUE, barcode.rawValue);
+            setResult(Activity.RESULT_OK, result);
+            finish();
+        }
     }
-     @Override
+    @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
         Log.e("barcodes ", ": " + barcodes.size());
         if (barcodes.size() > 1) {
@@ -151,14 +177,12 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
     }
     @Override
     public void onScanError(String errorMessage) {
-        Toast.makeText(this, "errorMessage: " + errorMessage, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "errorMessage: " + errorMessage, Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onCameraPermissionDenied() {
-        Toast.makeText(this, "Camera permission denied!", Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "Camera permission denied!", Toast.LENGTH_LONG).show();
     }
-
-
     private int getResourceId (String typeAndName)
     {
         if(package_name == null) package_name = getApplication().getPackageName();
@@ -170,5 +194,4 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         setResult(RESULT_CANCELED);
         super.onBackPressed();
     }
-
 }

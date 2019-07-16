@@ -61,8 +61,9 @@ public class ZBar extends CordovaPlugin {
                 case Activity.RESULT_OK:
 
                     String barcodeValue = result.getStringExtra(ScannerActivity.EXTRA_QRVALUE);
+                    Boolean isTag= result.getBooleanExtra(ScannerActivity.EXTRA_ISTAG,true);
                     Log.e("onActivityResult",  barcodeValue);
-                    scanCallbackContext.success(barcodeValue);
+                    scanCallbackContext.success(barcodeValue+":"+isTag);
                     break;
                 case Activity.RESULT_CANCELED:
                     Log.e("onActivityResult",  "cancelled");
