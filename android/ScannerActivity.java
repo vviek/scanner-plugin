@@ -138,7 +138,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         {
         if(showAlertCheck)
         {
-         handler.postDelayed(sendResult, 400);
+         handler.postDelayed(sendResult, 4000);
         }
 
 
