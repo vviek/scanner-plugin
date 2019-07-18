@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
 public class ScannerActivity extends Activity implements BarcodeReaderFragment.BarcodeReaderListener {
         private String barcodeValue;
     private BarcodeReaderFragment readerFragment;
@@ -35,6 +36,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
     private Boolean button_one_visibility;
     private Boolean check_double_barcode;
     private Handler handler;
+    private String errorMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         String  text_one= params.optString("text_one");
         String text_two = params.optString("text_two");
         String text_three= params.optString("text_three");
+         errorMessage= params.optString("double_barcode_detection_message");
         check_double_barcode= params.optBoolean("check_double_barcode",false);
 
         Boolean text_one_visibility = params.optBoolean("text_one_visibility", false);
@@ -129,7 +132,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
     @Override
     public void onScanned(Barcode barcode) {
         Log.e("onScanned : ", ": " + barcode.rawValue);
-        
+
         barcodeValue=barcode.rawValue;
         if(check_double_barcode)
         {
@@ -137,7 +140,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         {
          handler.postDelayed(sendResult, 400);
         }
-   
+
 
         }else {
             Intent result = new Intent ();
@@ -168,8 +171,8 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         handler.removeCallbacks(sendResult);
 
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setMessage("Please keep your camera more closure to barcode.");
-        adb.setTitle("Title of alert dialog");
+        adb.setMessage(errorMessage);
+        adb.setTitle("Barcode Detection");
         adb.setIcon(android.R.drawable.ic_dialog_alert);
         adb.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -219,3 +222,4 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         }
     };
 }
+
