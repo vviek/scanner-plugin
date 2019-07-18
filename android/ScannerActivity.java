@@ -133,15 +133,15 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
     public void onScanned(Barcode barcode) {
         Log.e("onScanned : ", ": " + barcode.rawValue);
         barCodeResult=barcode.rawValue;
-        if(!button_one_visibility)
-        {
+       // if(!button_one_visibility)
+        //{
             Intent result = new Intent ();
             result.putExtra(EXTRA_QRVALUE, barcode.rawValue);
             setResult(Activity.RESULT_OK, result);
             finish();
-        }else{
-            Toast.makeText(this, "Scanning finished, please select TAG or UNTAG ?", Toast.LENGTH_SHORT).show();
-        }
+        //}else{
+         //   Toast.makeText(this, "Scanning finished, please select TAG or UNTAG ?", Toast.LENGTH_SHORT).show();
+      //  }
     }
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
