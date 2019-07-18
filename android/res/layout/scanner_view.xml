@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+   
     <FrameLayout
         android:id="@+id/fm_container"
         android:layout_width="match_parent"
@@ -10,7 +11,7 @@
         android:background="#000000" />
 
     <LinearLayout
-
+        android:layout_above="@+id/btnLayout"
         android:id="@+id/textLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,20 +60,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/tag"
+            android:id="@+id/untaggable"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tag"
+            android:text="UnTaggable"
             android:layout_marginRight="20dp"
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/untag"
+            android:id="@+id/cancel"
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Untag"
+            android:text="Cancel"
             android:layout_marginLeft="20dp"
             android:textAllCaps="false" />
     </LinearLayout>

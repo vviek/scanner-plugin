@@ -79,23 +79,23 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         {
             text3.setVisibility(View.VISIBLE);
         }
-        Button btnTag= findViewById(getResourceId("id/tag"));
+        Button cancelBtn= findViewById(getResourceId("id/cancel"));
         if(button_one_visibility)
         {
-            btnTag.setVisibility(View.VISIBLE);
+            cancelBtn.setVisibility(View.VISIBLE);
         }
-        Button btnUnTag= findViewById(getResourceId("id/untag"));
+        Button btnUnTag= findViewById(getResourceId("id/untaggable"));
         if(button_two_visibility)
         {
             btnUnTag.setVisibility(View.VISIBLE);
         }
 
-        btnTag.setOnClickListener(new View.OnClickListener() {
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent result = new Intent ();
                 result.putExtra(EXTRA_QRVALUE, barCodeResult);
-                  result.putExtra(EXTRA_ISTAG, ":true");
+                result.putExtra(EXTRA_ISTAG, ":cancel");
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
@@ -106,7 +106,7 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
             public void onClick(View v) {
                 Intent result = new Intent ();
                 result.putExtra(EXTRA_QRVALUE, barCodeResult);
-                result.putExtra(EXTRA_ISTAG, ":false");
+                result.putExtra(EXTRA_ISTAG, ":untag");
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
