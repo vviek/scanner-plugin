@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.os.Handler;
 import com.google.android.gms.vision.barcode.Barcode;
 
 
