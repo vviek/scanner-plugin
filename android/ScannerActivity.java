@@ -22,9 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-
 public class ScannerActivity extends Activity implements BarcodeReaderFragment.BarcodeReaderListener {
-
+        private String barcodeValue;
     private BarcodeReaderFragment readerFragment;
     private boolean showAlertCheck = true;
     public static final String EXTRA_QRVALUE = "qrValue";
@@ -34,7 +33,8 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
     private String package_name;
     private Resources resources;
     private Boolean button_one_visibility;
-    private String barCodeResult;
+    private Boolean check_double_barcode;
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +56,8 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         String  text_one= params.optString("text_one");
         String text_two = params.optString("text_two");
         String text_three= params.optString("text_three");
+        check_double_barcode= params.optBoolean("check_double_barcode",false);
+
         Boolean text_one_visibility = params.optBoolean("text_one_visibility", false);
         Boolean text_two_visibility = params.optBoolean("text_two_visibility", false);
         Boolean text_three_visibility = params.optBoolean("text_three_visibility", false);
@@ -111,9 +113,9 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
                 finish();
             }
         });
-        //whichCamera = params.optString("camera");
-        //flashMode = params.optString("flash");
         addBarcodeReaderFragment();
+        handler = new Handler();
+
     }
     
     private void addBarcodeReaderFragment() {
@@ -123,51 +125,61 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(getResourceId("id/fm_container"), readerFragment);
         fragmentTransaction.commitAllowingStateLoss();
-
     }
-
-
-
-
     @Override
     public void onScanned(Barcode barcode) {
         Log.e("onScanned : ", ": " + barcode.rawValue);
-        barCodeResult=barcode.rawValue;
-       // if(!button_one_visibility)
-        //{
+        
+        barcodeValue=barcode.rawValue;
+        if(check_double_barcode)
+        {
+        if(showAlertCheck)
+        {
+         handler.postDelayed(sendResult, 400);
+        }
+   
+
+        }else {
             Intent result = new Intent ();
             result.putExtra(EXTRA_QRVALUE, barcode.rawValue);
             setResult(Activity.RESULT_OK, result);
             finish();
-        //}else{
-         //   Toast.makeText(this, "Scanning finished, please select TAG or UNTAG ?", Toast.LENGTH_SHORT).show();
-      //  }
+        }
+
+
     }
     @Override
     public void onScannedMultiple(List<Barcode> barcodes) {
         Log.e("barcodes ", ": " + barcodes.size());
-        if (barcodes.size() > 1) {
-            //readerFragment.pauseScanning();
-            if (showAlertCheck) {
-//                showAlertDialog();
+        if(check_double_barcode)
+        {
+            if (barcodes.size() > 1) {
+                readerFragment.pauseScanning();
+                if (showAlertCheck) {
+                    showAlertDialog();
+                }
             }
         }
+
+
     }
     private void showAlertDialog() {
         showAlertCheck=false;
+        handler.removeCallbacks(sendResult);
+
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setMessage("Please keep your camera more closure to barcode.");
         adb.setTitle("Title of alert dialog");
         adb.setIcon(android.R.drawable.ic_dialog_alert);
-        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        adb.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-
                 showAlertCheck=true;
-                addBarcodeReaderFragment();
+             addBarcodeReaderFragment();
             }
         });
         adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
@@ -196,4 +208,14 @@ public class ScannerActivity extends Activity implements BarcodeReaderFragment.B
         setResult(RESULT_CANCELED);
         super.onBackPressed();
     }
+
+    Runnable sendResult=new Runnable() {
+        @Override
+        public void run() {
+            Intent result = new Intent ();
+            result.putExtra(EXTRA_QRVALUE, barcodeValue);
+            setResult(Activity.RESULT_OK, result);
+            finish();
+        }
+    };
 }
