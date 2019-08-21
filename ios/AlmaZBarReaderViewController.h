@@ -9,5 +9,6 @@
 #import "ZBarReaderViewController.h"
 
 @interface AlmaZBarReaderViewController : ZBarReaderViewController
+@property (strong,nonatomic) NSString *buttonVisibilty;
 
 @end

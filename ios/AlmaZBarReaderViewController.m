@@ -33,8 +33,8 @@
     button.layer.cornerRadius = 10;
     button.clipsToBounds = YES;
     
-    [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+   // [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+   // [self.view addSubview:button];
 }
 
 - (BOOL)prefersStatusBarHidden {
